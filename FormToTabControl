@@ -1,0 +1,63 @@
+public void LoadFormToTabcontrol(Office2007Form obj)
+        {
+            int settab = -1;
+
+            Office2007Form objF = obj;
+
+            if (tabControl1.Tabs.Count == 0)
+            {
+                objF.TopLevel = false;
+                tabControl1.CreateTab(objF.Text);
+                TabControlPanel TabPanel1 = new TabControlPanel();
+                TabPanel1.Name = "Panel1";
+                TabPanel1.AutoScroll = true;
+                TabPanel1.Dock = DockStyle.Fill;
+                TabPanel1.Style.BackColor1.Color = objF.BackColor;
+                TabPanel1.Style.BackColor2.Color = objF.BackColor;
+                TabPanel1.Controls.Add(objF);
+
+                tabControl1.Tabs[0].AttachedControl.Controls.Add(TabPanel1);
+                objF.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+                objF.Dock = DockStyle.Fill;
+                objF.ControlBox = false;
+                objF.Show();
+                this.tabControl1.SelectedTabIndex = 0;
+            }
+            else
+            {
+                for (int i = 0; i <= tabControl1.Tabs.Count - 1; i++)
+                {
+                    if (objF.Text == tabControl1.Tabs[i].Text)
+                    {
+                        tabControl1.SelectedTabIndex = i;
+                        settab = 0;
+                        break;
+                    }
+                }
+                if (settab == -1)
+                {
+                    objF.TopLevel = false;
+                    tabControl1.CreateTab(objF.Text);
+                    settab = 1;
+                }
+                for (int i = 0; i <= tabControl1.Tabs.Count - 1; i++)
+                {
+                    if (settab == 1)
+                    {
+                        TabControlPanel TabPanel1 = new TabControlPanel();
+                        TabPanel1.Name = "Panel" + i + 1;
+                        TabPanel1.AutoScroll = true;
+                        TabPanel1.Dock = DockStyle.Fill;
+                        TabPanel1.Style.BackColor1.Color = objF.BackColor;
+                        TabPanel1.Style.BackColor2.Color = objF.BackColor;
+                        TabPanel1.Controls.Add(objF);
+                        tabControl1.Tabs[i].AttachedControl.Controls.Add(TabPanel1);
+                        objF.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+                        objF.Dock = DockStyle.Fill;
+                        objF.ControlBox = false;
+                        objF.Show();
+                        this.tabControl1.SelectedTabIndex = i;
+                    }
+                }
+            }
+        }
